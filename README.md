@@ -218,6 +218,29 @@ use Myth\Api;
 // dd($data);
 ```
 #### Mark your models
-##### set must sync with client
-##### set synced with client
-##### unsync model with client
+set must sync with client
+```php
+use Myth\Api;
+
+// $model = Api::syncWithClient("client-name", $client_id = 4, $model = User::find(1));
+// $model = Api::client("client-name")->syncModel($client_id = 5, $model = User::find(1));
+// $model = User::find(1)->syncWithClient("client-name", $client_id = 3);
+```
+set synced with client
+
+```php
+use Myth\Api;
+
+// $model = Api::syncedWithClient("client-name", $client_id = 4, $model = User::find(1));
+// $model = Api::client("client-name")->syncedModel($client_id = 5, $model = User::find(1));
+// $model = User::find(1)->syncedWithClient("client-name", $client_id = 3);
+```
+unsync model with client '`delete relation`'
+
+```php
+use Myth\Api;
+
+// $model = Api::unsyncWithClient("client-name", $client_id = 1, $model = User::find(1));
+// $model = Api::client("client-name")->unsyncModel($client_id = 1, $model = User::find(1));
+// $model = User::find(1)->unsyncWithClient("client-name", $client_id = 1);
+```
