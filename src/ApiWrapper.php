@@ -8,7 +8,6 @@ use Myth\Api\Wrappers\ResponseTrait;
 
 /**
  * Class ApiWrapper
- * @method  string name
  * @package Myth\Api
  */
 class ApiWrapper
@@ -25,6 +24,11 @@ class ApiWrapper
     /** @var string $authentication header authentication name */
     protected $tokenName = 'MYTH-XSRF';
 
+    /**
+     * ApiWrapper constructor.
+     * @param $managerConfig
+     * @param $clientConfig
+     */
     public function __construct($managerConfig, $clientConfig)
     {
         $this->managerConfig = $managerConfig;
@@ -40,11 +44,11 @@ class ApiWrapper
         return $this->tokenName;
     }
 
-    public function __call($name, $arguments)
+    /**
+     * @return string
+     */
+    public function name()
     {
-        if(strtolower($name) === 'name'){
-            return $this->getName();
-        }
-        return null;
+        return $this->getName();
     }
 }

@@ -37,7 +37,7 @@ return [
     | * models: Array of your models will be able to syc with specific client.
     |   - model options: [ Namespace => options ]
     |   - uri: The url Or prefix of model at client software. Example: BASE_URL/MODEL_URI. http://127.0.0.1/api/v1/user
-    |   - transformer: This option will use automatically when you system sync 'send' model data to your client.
+    |   - transformer: This option will use automatically when your system sync 'send' model data to your client.
     |   You must make a new transformer for each client's model.
     |   Try command line: php artisan myth:make-api-transformer {name}
     |
@@ -51,7 +51,7 @@ return [
             "models"   => [
                 App\User::class => [
                     "uri"         => "user",
-                    "transformer" => App\Api\UserApiTransformer::class,
+                    "transformer" => App\UserApiTransformer::class,
                 ],
             ],
             "options"  => [

@@ -28,6 +28,20 @@ trait HasApiManager
         return Api::clientData($client, static::class, $sync);
     }
 
+    protected static function bootHasApiManager()
+    {
+        static::saved(function ($model) {
+            if($model->client_storage()->exists()){
+                $model->client_storage()->update([
+                    'sync' => true,
+                ]);
+            }
+        });
+        static::deleted(function ($model) {
+            $model->client_storage()->delete();
+        });
+    }
+
     /**
      * sync model to client
      * @param ManagerWrapper|string $client
@@ -61,7 +75,7 @@ trait HasApiManager
      */
     public function client_storage()
     {
-        return $this->morphOne(ClientModel::class, 'syncable');
+        return $this->morphMany(ClientModel::class, 'syncable');
     }
 
     /**

@@ -39,6 +39,7 @@
         "Myth\\Api\\Providers\\ApiServiceProvider"
       ],
       "aliases": {
+        "Myth\\Api" : "Myth\\Api\\Facades\\Api"
       }
     }
   },

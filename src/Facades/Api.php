@@ -8,14 +8,13 @@ use Illuminate\Support\Facades\Facade;
 use Myth\Api\ClientModelWrapper;
 use Myth\Api\Interfaces\ResponseInterface;
 use Myth\Api\ManagerWrapper;
-use Myth\Api\Models\ClientModel;
 
 /**
  * Class Api
  * @method static ManagerWrapper client(string $clientName)
  * @method static string getClientModelUri(ManagerWrapper|string $client, $model)
  * @method static ResponseInterface sendToClient(ManagerWrapper|string $client, string|ClientModelWrapper|Model $model, array $body = null)
- * @method static string modelToString( $model)
+ * @method static string modelToString($model)
  * @method static Builder clientData($client, $model, bool $sync = null)
  * @method static mixed syncWithClient($client, $client_id, $model)
  * @method static mixed syncedWithClient($client, $client_id, $model)

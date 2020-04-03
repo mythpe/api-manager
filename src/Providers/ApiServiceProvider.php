@@ -2,11 +2,11 @@
 
 namespace Myth\Api\Providers;
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Myth\Api\ApiWrapper;
 use Myth\Api\Commands\MakeApiTransformerCommand;
 use Myth\Api\Facades\Api;
-use Myth\Api\Facades\Manager;
 
 class ApiServiceProvider extends ServiceProvider
 {
@@ -15,6 +15,9 @@ class ApiServiceProvider extends ServiceProvider
     protected $configs = [
         'myth-client',
         'myth-manager',
+    ];
+    protected $migrations = [
+        '2020_04_02_045532_myth_api_client',
     ];
 
     /** @var string[] $commands commands list */
@@ -35,6 +38,8 @@ class ApiServiceProvider extends ServiceProvider
             return new ApiWrapper($config['myth-manager'], $config['myth-client']);
         });
         $this->commands($this->commands);
+
+        // AliasLoader::getInstance()->alias("Myth\Api", Api::class);
     }
 
     /**
@@ -45,14 +50,12 @@ class ApiServiceProvider extends ServiceProvider
     {
         $publishes = [];
         foreach($this->configs as $config){
-            $publishes[__DIR__."/../Config/{$config}.php"] = config_path("{$config}.php");
+            $publishes[__DIR__."/../Configs/{$config}.php"] = config_path("{$config}.php");
         }
-        // $this->publishes([
-        //     __DIR__."/../Config/mythclient.php" => config_path("mythclient.php"),
-        //
-        //     __DIR__."/../Migrations/2020_03_28_171806_myth_api_client.php" => database_path("migrations/2020_03_28_171806_myth_api_client.php"),
-        // ], "mythclient");
-        // dd($this->app);
+        foreach($this->migrations as $migration){
+            $publishes[__DIR__."/../Migrations/{$migration}.php"] = database_path("{$migration}.php");
+        }
+        $this->publishes($publishes, "myth-api");
     }
 
     /**
@@ -61,6 +64,6 @@ class ApiServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [Manager::class];
+        return [Api::class];
     }
 }
