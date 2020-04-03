@@ -201,46 +201,46 @@ The response using class `ResponseInterface` package contains methods you can ac
 ```php
 use Myth\Api;
 
-// $data = Api::clientData("client-name", User::class, $sync = true)->get();
-// $data = Api::clientData("client-name", User::class, $sync = false)->get();
-// $data = Api::clientData("client-name", User::class, $sync = null)->get();
-// dd($data);
+$data = Api::clientData("client-name", User::class, $sync = true)->get();
+$data = Api::clientData("client-name", User::class, $sync = false)->get();
+$data = Api::clientData("client-name", User::class, $sync = null)->get();
+dd($data);
 
-// $client = Api::client('client-name');
-// $data = $client->model(User::class)->data($sync = true)->get();
-// $data = $client->model(User::class)->data($sync = false)->get();
-// $data = $client->model(User::class)->data($sync = null)->get();
-// dd($data);
+$client = Api::client('client-name');
+$data = $client->model(User::class)->data($sync = true)->get();
+$data = $client->model(User::class)->data($sync = false)->get();
+$data = $client->model(User::class)->data($sync = null)->get();
+dd($data);
 
-// $data = User::clientData("client-name", $sync = true)->get();
-// $data = User::clientData("client-name", $sync = false)->get();
-// $data = User::clientData("client-name", $sync = null)->get();
-// dd($data);
+$data = User::clientData("client-name", $sync = true)->get();
+$data = User::clientData("client-name", $sync = false)->get();
+$data = User::clientData("client-name", $sync = null)->get();
+dd($data);
 ```
 #### Mark your models
 set must sync with client
 ```php
 use Myth\Api;
 
-// $model = Api::syncWithClient("client-name", $client_id = 4, $model = User::find(1));
-// $model = Api::client("client-name")->syncModel($client_id = 5, $model = User::find(1));
-// $model = User::find(1)->syncWithClient("client-name", $client_id = 3);
+$model = Api::syncWithClient("client-name", $client_id = 4, $model = User::find(1));
+$model = Api::client("client-name")->syncModel($client_id = 5, $model = User::find(1));
+$model = User::find(1)->syncWithClient("client-name", $client_id = 3);
 ```
 set synced with client
 
 ```php
 use Myth\Api;
 
-// $model = Api::syncedWithClient("client-name", $client_id = 4, $model = User::find(1));
-// $model = Api::client("client-name")->syncedModel($client_id = 5, $model = User::find(1));
-// $model = User::find(1)->syncedWithClient("client-name", $client_id = 3);
+$model = Api::syncedWithClient("client-name", $client_id = 4, $model = User::find(1));
+$model = Api::client("client-name")->syncedModel($client_id = 5, $model = User::find(1));
+$model = User::find(1)->syncedWithClient("client-name", $client_id = 3);
 ```
 unsync model with client '`delete relation`'
 
 ```php
 use Myth\Api;
 
-// $model = Api::unsyncWithClient("client-name", $client_id = 1, $model = User::find(1));
-// $model = Api::client("client-name")->unsyncModel($client_id = 1, $model = User::find(1));
-// $model = User::find(1)->unsyncWithClient("client-name", $client_id = 1);
+$model = Api::unsyncWithClient("client-name", $client_id = 1, $model = User::find(1));
+$model = Api::client("client-name")->unsyncModel($client_id = 1, $model = User::find(1));
+$model = User::find(1)->unsyncWithClient("client-name", $client_id = 1);
 ```
