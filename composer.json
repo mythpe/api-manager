@@ -21,7 +21,9 @@
     "laravel/framework": ">=5.8",
     "ext-json": "*"
   },
-  "require-dev": {},
+  "require-dev": {
+    "guzzlehttp/guzzle": ">=6.2.1"
+  },
   "autoload": {
     "psr-4": {
       "Myth\\Api\\": "src/"
