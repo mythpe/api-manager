@@ -1,0 +1,44 @@
+{
+  "name": "4myth/api",
+  "type": "library",
+  "description": "Synchronizing data between Laravel's framework",
+  "keywords": [
+    "Myth",
+    "4myth",
+    "http",
+    "laravel",
+    "sync"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ahmed Fayez",
+      "email": "mythpe@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "laravel/framework": ">=5.8",
+    "ext-json": "*"
+  },
+  "require-dev": {},
+  "autoload": {
+    "psr-4": {
+      "Myth\\Api\\": "src/"
+    },
+    "files": [
+      "src/Helpers/Functions.php"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Myth\\Api\\Providers\\ApiServiceProvider"
+      ],
+      "aliases": {
+      }
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
