@@ -1,4 +1,4 @@
-## MyTh API manager
+## MyTh API Manager
 [![Latest Stable Version](https://poser.pugx.org/4myth/api/v/stable)](https://packagist.org/packages/4myth/api)
 [![License](https://poser.pugx.org/4myth/api/license)](https://packagist.org/packages/4myth/api)
 [![Total Downloads](https://poser.pugx.org/4myth/api/downloads)](https://packagist.org/packages/4myth/api)
@@ -235,7 +235,7 @@ $model = Api::syncedWithClient("client-name", $client_id = 4, $model = User::fin
 $model = Api::client("client-name")->syncedModel($client_id = 5, $model = User::find(1));
 $model = User::find(1)->syncedWithClient("client-name", $client_id = 3);
 ```
-unsync model with client '`delete relation`'
+unsync model with client `Delete relation`
 
 ```php
 use Myth\Api;
