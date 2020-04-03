@@ -39,7 +39,7 @@ return [
     |   - uri: The url Or prefix of model at client software. Example: BASE_URL/MODEL_URI. http://127.0.0.1/api/v1/user
     |   - transformer: This option will use automatically when you system sync 'send' model data to your client.
     |   You must make a new transformer for each client's model.
-    |   Try command line: php artisan myth:make-transformer {name}
+    |   Try command line: php artisan myth:make-api-transformer {name}
     |
     |  @important: your array key of client must be the name of client.
     |

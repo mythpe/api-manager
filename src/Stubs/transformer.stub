@@ -1,0 +1,18 @@
+<?php
+
+namespace App;
+
+use Myth\Api\Transformer\BaseApiTransformer;
+
+class {CLASS_NAME} extends BaseApiTransformer
+{
+
+    /**
+     * The body of  the http request will we append when sync new data to client
+     * @return array
+     */
+    public function body(): array
+    {
+        return $this->toArray();
+    }
+}

@@ -4,7 +4,7 @@ namespace Myth\Api\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Myth\Api\ApiWrapper;
-use Myth\Api\Commands\MakeTransformerCommand;
+use Myth\Api\Commands\MakeApiTransformerCommand;
 use Myth\Api\Facades\Api;
 use Myth\Api\Facades\Manager;
 
@@ -18,7 +18,7 @@ class ApiServiceProvider extends ServiceProvider
     ];
 
     /** @var string[] $commands commands list */
-    protected $commands = [MakeTransformerCommand::class,];
+    protected $commands = [MakeApiTransformerCommand::class,];
 
     /**
      * Register services.
