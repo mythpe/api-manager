@@ -28,10 +28,7 @@
   "autoload": {
     "psr-4": {
       "Myth\\Api\\": "src/"
-    },
-    "files": [
-      "src/Helpers/Functions.php"
-    ]
+    }
   },
   "extra": {
     "laravel": {
