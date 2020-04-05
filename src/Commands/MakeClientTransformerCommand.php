@@ -5,30 +5,27 @@ namespace Myth\Api\Commands;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 
-/**
- * Class MakeApiTransformerCommand
- * @package Myth\Api\Commands
- */
-class MakeApiTransformerCommand extends BaseCommand
+
+class MakeClientTransformerCommand extends BaseCommand
 {
 
     /**
      * The console command signature.
      * @var string
      */
-    protected $signature = 'myth:make-api-transformer {name : The name of the transformer}';
+    protected $signature = 'myth:make-client-transformer {name : The name of the transformer}';
 
     /**
      * The console command description.
      * @var string
      */
-    protected $description = 'Create a new api transformer of model file';
+    protected $description = 'Create a new client api transformer of model file';
     /** @var Filesystem */
     protected $fs;
 
     /**
      * Create a new command instance.
-     * @return void
+     * @param \Illuminate\Filesystem\Filesystem $fs
      */
     public function __construct(Filesystem $fs)
     {
@@ -76,7 +73,7 @@ class MakeApiTransformerCommand extends BaseCommand
      */
     function getStub()
     {
-        return $this->fs->get($this->stubPath('transformer'));
+        return $this->fs->get($this->stubPath('client-transformer'));
     }
 
     /**

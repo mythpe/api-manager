@@ -3,7 +3,6 @@
 namespace Myth\Api\Helpers;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use Myth\Api\Facades\Api;
 
 class HttpClient
@@ -11,12 +10,12 @@ class HttpClient
 
     /** @var string $authentication header authentication name */
     protected $tokenName = '';
+
     /** @var string $token header authentication value */
     protected $token = '';
+
     /** @var array $httpOptions Client options */
     private $httpOptions = [];
-    /** @var \GuzzleHttp\Client $client */
-    private $client;
 
     /**
      * HttpClient constructor.
@@ -24,8 +23,8 @@ class HttpClient
      */
     public function __construct($options = [])
     {
-        $this->setTokenName(Api::getTokenName());
-        $this->createClient($options);
+        $this->setTokenName(Api::headerSRF());
+        $this->setOptions($options);
     }
 
     /**
@@ -87,12 +86,13 @@ class HttpClient
     /**
      * Get http option
      * @param string|null $key
+     * @param null $default
      * @return array|mixed|null
      */
-    public function getOption(string $key = null)
+    public function getOption(string $key = null, $default = null)
     {
         if(is_null($key)) return $this->httpOptions;
-        return $this->httpOptions[strtolower($key)]??null;
+        return isset($this->httpOptions[$key]) ? $this->httpOptions[$key] : $default;
     }
 
     /**
@@ -102,18 +102,19 @@ class HttpClient
      */
     public function setHeader(string $key, string $value): HttpClient
     {
-        $this->httpOptions['headers'][strtolower($key)] = $value;
+        $this->httpOptions['headers'][$key] = $value;
         return $this;
     }
 
     /**
      * @param string $key
+     * @param null $default
      * @return mixed
      */
-    public function getHeader(string $key = null)
+    public function getHeader(string $key = null, $default = null)
     {
         if(is_null($key)) return $this->httpOptions['headers'];
-        return $this->httpOptions['headers'][strtolower($key)]??null;
+        return isset($this->httpOptions['headers'][$key]) ? $this->httpOptions['headers'][$key] : $default;
     }
 
     /**
@@ -161,41 +162,9 @@ class HttpClient
      * Wrapper of \GuzzleHttp\Client
      * @return Client
      */
-    public function client() :Client
+    public function client(): Client
     {
-        return $this->client;
-    }
-
-    public function request($method, $uri, $options = [])
-    {
-        $method = strtoupper($method);
-        // return $this->client()->request($method, $uri);
-        try{
-            $response = $this->client()->request($method, $uri, $options);
-            // d($response->getBody()->getContents());
-            $data = json_decode($response->getBody()->getContents(), true);
-            // d($data);
-            // d($response->getStatusCode(),$response->getHeader('accepts'),$response->getBody());
-            // d($response->getBody()->);
-            // d($response->getBody()->getContents());
-        }
-        catch(RequestException $e){
-            $data = [];
-            // d($e);
-            // d(\GuzzleHttp\Psr7\str($e->getResponse()));
-            // d(\GuzzleHttp\Psr7\str($e->getRequest()));
-        }
-        $status = $response->getStatusCode();
-        // d($data);
-        $res = array_merge(is_array($data) ? $data : [], [
-                'success' => (boolean) (isset($data['success']) ? $data['success'] : $status == 200),
-                'status'  => (int) $status,
-                'message' => (string) (isset($data['message']) ? $data['message'] : ''),
-                'data'    => (array) (isset($data['data']) ? $data['data'] : []),
-                'errors'  => (array) (isset($data['errors']) ? $data['errors'] : []),
-            ]);
-        krsort($res);
-        return $res;
+        return new Client($this->httpOptions);
     }
 
     /**
@@ -228,17 +197,6 @@ class HttpClient
     }
 
     /**
-     * @param array $options
-     * @return $this
-     */
-    protected function createClient($options = []): HttpClient
-    {
-        $this->setOptions($options);
-        $this->client = new Client($this->httpOptions);
-        return $this;
-    }
-
-    /**
      * set Http options
      * @param array $options
      * @return HttpClient
@@ -255,6 +213,7 @@ class HttpClient
             }
         }
         $this->setDefaultHeaders();
+        // d($this);
         return $this;
     }
 

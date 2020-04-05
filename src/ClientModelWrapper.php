@@ -11,10 +11,13 @@ class ClientModelWrapper
 
     /** @var ManagerWrapper $client client wrapper */
     protected $client;
+
     /** @var string locale model class name */
     protected $modelClassName;
+
     /** @var mixed $model locale model object */
     protected $model;
+
     /** @var array $config model config */
     protected $config = [];
 
@@ -29,14 +32,6 @@ class ClientModelWrapper
         $this->modelClassName = !is_string($model) ? get_class($model) : $model;
         $this->model = is_string($model) ? app($model) : $model;
         $this->config = $this->client->getModelConfig($this->modelClassName);
-    }
-
-    /**
-     * @return string
-     */
-    public function getModelClassName(): string
-    {
-        return $this->modelClassName;
     }
 
     /**
@@ -82,25 +77,6 @@ class ClientModelWrapper
     public function uri(): string
     {
         return $this->config['uri'];
-    }
-
-    /**
-     * get full model uri for client
-     * @return string
-     */
-    public function getFullUri(): string
-    {
-        return Api::getClientModelUri($this->client(), $this->model());
-    }
-
-    /**
-     * alias
-     * @return string
-     * @uses $this->getFullUri
-     */
-    public function getFullUrl(): string
-    {
-        return Api::getClientModelUri($this->client(), $this->model());
     }
 
     /**

@@ -13,11 +13,11 @@ class MythApiClient extends Migration
      */
     public function up()
     {
-        Schema::create('myth_api_client_models', function (Blueprint $table) {
+        Schema::create('myth_api_manager_models', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->morphs('syncable');
-            $table->string('client_name');
-            $table->string('client_id');
+            $table->string("manager_name");
+            $table->string("manager_id");
             $table->boolean('sync')->default(true);
             $table->timestamp('sync_time')->nullable();
             $table->timestamps();
@@ -30,6 +30,6 @@ class MythApiClient extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('myth_api_client_models');
+        Schema::dropIfExists('myth_api_manager_models');
     }
 }

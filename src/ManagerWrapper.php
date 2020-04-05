@@ -2,6 +2,7 @@
 
 namespace Myth\Api;
 
+use Illuminate\Database\Eloquent\Builder;
 use Myth\Api\Facades\Api;
 use Myth\Api\Helpers\HttpClient;
 use Myth\Api\Interfaces\ResponseInterface;
@@ -14,17 +15,23 @@ class ManagerWrapper
 {
 
     /** @var string $name Client name */
-    protected $name;
+    protected $name = '';
+
     /** @var array $config Client config */
-    protected $config;
+    protected $config = [];
+
     /** @var string $secret Client secret */
-    protected $secret;
-    /** @var string $baseUrl Client API base URL */
-    protected $baseUrl;
+    protected $secret = '';
+
+    /** @var string $baseUri Client API base URL */
+    protected $baseUri = '';
+
     /** @var array[] $models list of locale models must will be sync with client */
-    protected $models;
+    protected $models = [];
+
     /** @var array[] $options Client options */
-    protected $options;
+    protected $options = [];
+
     /** @var HttpClient $http client */
     protected $http;
 
@@ -37,13 +44,36 @@ class ManagerWrapper
     {
         /** fill client config */
         $this->fillClientConfig($config, $name);
-        $options = isset($config['options']['http']) ? $config['options']['http'] : [];
+
         /** @var HttpClient http */
-        $this->http = new HttpClient($options);
+        $this->http = new HttpClient($this->getOption('http', []));
+
+        $this->http->setOption('base_uri', $this->getBaseUri());
+
         /** set header manager key name */
         $this->http->setManagerName(Api::name());
+
         /** set token client */
         $this->http->setClientToken($this->secret);
+    }
+
+    /**
+     * @param null|string $append
+     * @return string
+     */
+    public function getBaseUri(string $append = null): string
+    {
+        return $this->baseUri.(!is_null($append) ? ltrim($append, '/') : "");
+    }
+
+    /**
+     * @param string $baseUri
+     * @return ManagerWrapper
+     */
+    public function setBaseUrl(string $baseUri): ManagerWrapper
+    {
+        $this->baseUri = rtrim($baseUri, '/')."/";
+        return $this;
     }
 
     /**
@@ -64,39 +94,12 @@ class ManagerWrapper
     }
 
     /**
-     * @return string
-     */
-    public function getSecret(): string
-    {
-        return $this->secret;
-    }
-
-    /**
      * @param string $secret
      * @return ManagerWrapper
      */
     public function setSecret(string $secret): ManagerWrapper
     {
         $this->secret = $secret;
-        return $this;
-    }
-
-    /**
-     * @param null|string $append
-     * @return string
-     */
-    public function getBaseUrl(string $append = null): string
-    {
-        return rtrim($this->baseUrl, '/').(!is_null($append) ? "/".ltrim($append, '/') : "");
-    }
-
-    /**
-     * @param string $baseUrl
-     * @return ManagerWrapper
-     */
-    public function setBaseUrl(string $baseUrl): ManagerWrapper
-    {
-        $this->baseUrl = rtrim($baseUrl, '/');
         return $this;
     }
 
@@ -111,21 +114,33 @@ class ManagerWrapper
     }
 
     /**
+     * Get model client locale storage data
+     * @param $model
+     * @param null $sync
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function data($model, $sync = null): Builder
+    {
+        return $this->model($model)->data($sync);
+    }
+
+    /**
      * @param mixed $model
      * @param array|null $body
+     * @param $primaryKey
      * @return ResponseInterface
      */
-    public function sendData($model, array $body = null): ResponseInterface
+    public function sendData($model, array $body = null, $primaryKey = null): ResponseInterface
     {
         $model = $this->model($model);
         if(is_null($body)){
             $body = $model->transformer()->body();
         }
-        return Api::sendToClient($this, $model, $body);
+        return Api::sendToClient($this, $model, $body, $primaryKey);
     }
 
     /**
-     * get specific locale model config for client
+     * get specific locale model config of client
      * @param $model
      * @return array
      */
@@ -170,6 +185,55 @@ class ManagerWrapper
     }
 
     /**
+     * @return array[]
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param array[] $options
+     */
+    public function setOptions(array $options): void
+    {
+        $this->options = $options;
+    }
+
+    /**
+     * @param null $key
+     * @param null $default
+     * @return array|array[]
+     */
+    public function getOption($key = null, $default = null)
+    {
+        if(is_null($key)) return $this->getOptions();
+        return array_key_exists($key, $this->options) ? $this->options[$key] : $default;
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $value
+     */
+    public function setOption(string $key, $value): void
+    {
+        $this->options[$key] = $value;
+    }
+
+    /**
+     * @param null $key
+     * @param null $value
+     * @return $this|array|array[]|mixed
+     */
+    public function option($key = null, $value = null)
+    {
+        if(is_null($key)) return $this->getOptions();
+        if(is_null($value)) return $this->getOption($key);
+        $this->setOption($key, $value);
+        return $this;
+    }
+
+    /**
      * Fill client config data into class
      * @param $config
      * @param $name
@@ -179,14 +243,8 @@ class ManagerWrapper
         $this->config = $config;
         $this->name = $name;
         $this->setSecret($this->config['secret']);
-        $this->setBaseUrl($config['base_url']);
+        $this->setBaseUrl($config['base_uri']);
         $this->models = $this->config['models'];
         $this->options = $this->config['options'];
     }
 }
-
-/**
- * 1- send new data
- * 2- get list of data
- * 3- update data
- */

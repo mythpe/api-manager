@@ -3,29 +3,43 @@
 namespace Myth\Api\Providers;
 
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Myth\Api\ApiWrapper;
-use Myth\Api\Commands\MakeApiTransformerCommand;
+use Myth\Api\Commands\GetSecretCommand;
+use Myth\Api\Commands\MakeClientTransformerCommand;
+use Myth\Api\Commands\MakeManagerTransformerCommand;
+use Myth\Api\Commands\MakeSecretCommand;
 use Myth\Api\Facades\Api;
+use Myth\Api\Middlewares\AuthenticateMiddleware;
+use Myth\Api\Mixins\RequestMixin;
 
 class ApiServiceProvider extends ServiceProvider
 {
 
-    /** @var string[] $configs config files */
+    /** @var string[] config files */
     protected $configs = [
         'myth-client',
         'myth-manager',
     ];
+
+    /** @var string[] migration files */
     protected $migrations = [
-        '2020_04_02_045532_myth_api_client',
+        '2020_04_02_045532_myth_api_manager',
+        '2020_04_04_045532_myth_api_client',
     ];
 
     /** @var string[] $commands commands list */
-    protected $commands = [MakeApiTransformerCommand::class,];
+    protected $commands = [
+        MakeClientTransformerCommand::class,
+        MakeManagerTransformerCommand::class,
+        MakeSecretCommand::class,
+        GetSecretCommand::class,
+    ];
 
     /**
      * Register services.
-     * @return void
      */
     public function register()
     {
@@ -37,25 +51,10 @@ class ApiServiceProvider extends ServiceProvider
             $config = $app['config'];
             return new ApiWrapper($config['myth-manager'], $config['myth-client']);
         });
+        AliasLoader::getInstance()->alias("Myth\Api", Api::class);
+        $this->app->make("Myth\\Api\\Controllers\\ApiClientController");
         $this->commands($this->commands);
-
-        // AliasLoader::getInstance()->alias("Myth\Api", Api::class);
-    }
-
-    /**
-     * Bootstrap services.
-     * @return void
-     */
-    public function boot()
-    {
-        $publishes = [];
-        foreach($this->configs as $config){
-            $publishes[__DIR__."/../Configs/{$config}.php"] = config_path("{$config}.php");
-        }
-        foreach($this->migrations as $migration){
-            $publishes[__DIR__."/../Migrations/{$migration}.php"] = database_path("{$migration}.php");
-        }
-        $this->publishes($publishes, "myth-api");
+        $this->app['router']->aliasMiddleware('myth.api.auth', AuthenticateMiddleware::class);
     }
 
     /**
@@ -65,5 +64,25 @@ class ApiServiceProvider extends ServiceProvider
     public function provides()
     {
         return [Api::class];
+    }
+
+    /**
+     * Bootstrap services.
+     * @return void
+     * @throws \ReflectionException
+     */
+    public function boot()
+    {
+        $publishes = [];
+        foreach($this->configs as $config){
+            $publishes[__DIR__."/../Configs/{$config}.php"] = config_path("{$config}.php");
+        }
+        foreach($this->migrations as $migration){
+            $publishes[__DIR__."/../Migrations/{$migration}.php"] = database_path("migrations/{$migration}.php");
+        }
+        $this->publishes($publishes, "myth-api");
+
+        Request::mixin(new RequestMixin());
+        Route::model('MythApiManagerModel', Api::class);
     }
 }

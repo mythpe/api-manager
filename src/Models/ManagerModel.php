@@ -5,19 +5,20 @@ namespace Myth\Api\Models;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class ClientModel
- * @method static ClientModel|Builder Sync
- * @method static ClientModel|Builder Synced
+ * Class ManagerModel
+ * @method static ManagerModel|Builder Sync
+ * @method static ManagerModel|Builder Synced
+ * @method static Builder ManagerModelScope($model, $manager, $manager_id)
  * @package Myth\Api\Models
  */
-class ClientModel extends Model
+class ManagerModel extends Model
 {
 
-    protected $table = "myth_api_client_models";
+    protected $table = "myth_api_manager_models";
 
     protected $fillable = [
-        'client_name',
-        'client_id',
+        'manager_name',
+        'manager_id',
         'syncable_type',
         'syncable_id',
         'sync',
@@ -35,28 +36,28 @@ class ClientModel extends Model
     protected $dates = ['sync_time'];
 
     /**
-     * @param string $client
+     * @param string $manager
      * @param $model
      * @param bool|null $sync
      * @return mixed
      */
-    public static function clientData(string $client, $model, $sync = null)
+    public static function managerData(string $manager, $model, $sync = null)
     {
-        return $model::ByClient($client, $sync);
+        return $model::ByManager($manager, $sync);
     }
 
     /**
      * @param \Illuminate\Database\Eloquent\Builder $builder
      * @param $model
-     * @param $client
-     * @param $client_id
+     * @param $manager
+     * @param $manager_id
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeClientModelScope(Builder $builder, $model, $client, $client_id)
+    public function scopeManagerModelScope(Builder $builder, $model, $manager, $manager_id)
     {
         return $builder->where([
-            'client_name'   => $client,
-            'client_id'     => $client_id,
+            'manager_name'  => $manager,
+            'manager_id'    => $manager_id,
             'syncable_type' => $model,
         ]);
     }
@@ -64,13 +65,13 @@ class ClientModel extends Model
     /**
      * @param \Illuminate\Database\Eloquent\Builder $builder
      * @param $model
-     * @param $client
+     * @param $manager
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeByClient(Builder $builder, $model, $client)
+    public function scopeByManager(Builder $builder, $model, $manager)
     {
         return $builder->where([
-            'client_name'   => $client,
+            'manager_name'  => $manager,
             'syncable_type' => $model,
         ]);
     }
@@ -100,7 +101,7 @@ class ClientModel extends Model
     }
 
     /**
-     * locale client data
+     * locale manager data
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function syncable()

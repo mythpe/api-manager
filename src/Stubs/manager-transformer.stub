@@ -1,0 +1,74 @@
+<?php
+/**
+ * Copyright MyTh
+ * Website: https://4MyTh.com
+ * Email: mythpe@gmail.com
+ * Copyright © 2006-2020 MyTh All rights reserved.
+ */
+
+namespace App;
+
+use Illuminate\Http\Request;
+use Myth\Api\Transformer\ManagerTransformer;
+
+/**
+ * Class {CLASS_NAME}
+ * @package App
+ */
+class {CLASS_NAME} extends ManagerTransformer
+{
+
+    /**
+     * array will fill the model when manager sync new model into client
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param \Illuminate\Http\Request $request
+     * @return array
+     * @uses @function setRawAttributes
+     */
+    public static function fillable($model, Request $request): array
+    {
+        return $request->only($model->getFillable());
+    }
+
+    /**
+     * validate manager request
+     * this function must return value of request validation
+     * @param \Illuminate\Http\Request $request
+     * @param $model
+     * @return bool|string error message
+     */
+    public static function validate(Request $request, $model)
+    {
+        return true;
+    }
+
+    /**
+     * Event model will saving in client database
+     * @param $model
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     */
+    public static function saving($model, Request $request): void
+    {
+    }
+
+    /**
+     * Event model was saved in client database
+     * @param $model
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     */
+    public static function saved($model, Request $request): void
+    {
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param \Illuminate\Http\Request $request
+     * @return array
+     */
+    public static function toArray($model, Request $request): array
+    {
+        return $model->toArray();
+    }
+}

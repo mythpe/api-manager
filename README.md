@@ -43,7 +43,7 @@ php artisan vendor:publish --tag=myth-api
       # Client name
       "client-name" => [
           "secret"   => "secret",
-          "base_url" => "http://127.0.0.1/api/v1",
+          "base_uri" => "http://127.0.0.1/api/v1",
           "models"   => [
               App\User::class => [
                   "uri"         => "user",
@@ -78,9 +78,9 @@ Example multiple models with clients:
 #### Client config: 
 The `key` of client array must be the client name in your application.
 
-All options **array keys**: `secret`,`base_url`,`options`,`models`
+All options **array keys**: `secret`,`base_uri`,`options`,`models`
 1. `secret`: Client's authentication secret, which you can obtain from your client.
-2. `base_url`: Client api url.
+2. `base_uri`: Client api url.
  Example: `http://127.0.0.1/api/v1`
 3. `options`: Array of your client options. available options: `http`.
     * `http`: GuzzleHttp\Client options. See: http://docs.guzzlephp.org
@@ -112,7 +112,7 @@ class User extends Model
 #### Model transformer
 first to make a new model **transformer** we have configure in our **config**, we can execute **artisan** command: 
 ```php
-php artisan myth:make-api-transformer TransformerName
+php artisan myth:make-client-transformer TransformerName
 ```
 then we will find the transformer inside app directory `app\TransformerName.php`
 #### Transformer file:

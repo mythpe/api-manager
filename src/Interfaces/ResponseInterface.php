@@ -2,10 +2,19 @@
 
 namespace Myth\Api\Interfaces;
 
+use Myth\Api\Facades\Api;
+
+/**
+ * Class ResponseInterface
+ * @package Myth\Api\Interfaces
+ */
 class ResponseInterface
 {
 
+    /** @var \GuzzleHttp\Psr7\Response */
     protected $request;
+
+    /** @var array */
     protected $response;
 
     /**
@@ -19,11 +28,17 @@ class ResponseInterface
         $this->response = $response;
     }
 
+    /**
+     * @return \GuzzleHttp\Psr7\Response
+     */
     public function request(): \GuzzleHttp\Psr7\Response
     {
         return $this->request;
     }
 
+    /**
+     * @return array
+     */
     public function response(): array
     {
         return $this->response;
@@ -35,6 +50,12 @@ class ResponseInterface
      */
     public function client_id(): int
     {
-        return (int) isset($this->response()['client_id']) ? $this->response()['client_id'] : 0;
+        $response = $this->response();
+        try{
+            return (int) $response['data'][Api::clientResponseKey()][Api::clientPrimaryKey()];
+        }
+        catch(\Exception $exception){
+        }
+        return 0;
     }
 }
