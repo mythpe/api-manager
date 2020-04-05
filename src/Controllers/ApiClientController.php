@@ -2,6 +2,7 @@
 
 namespace Myth\Api\Controllers;
 
+use Exception;
 use Illuminate\Validation\ValidationException;
 use Myth\Api\Exceptions\ManagerRequestValidatorException;
 use Myth\Api\Facades\Api;
@@ -9,9 +10,17 @@ use Myth\Api\ManagerModelWrapper as Model;
 use Myth\Api\Models\ManagerModel;
 use Myth\Api\Resources\CollectionResponse;
 
+/**
+ * Class ApiClientController
+ * @package Myth\Api\Controllers
+ */
 class ApiClientController extends BaseController
 {
 
+    /**
+     * @param \Myth\Api\ManagerModelWrapper $model
+     * @return \Myth\Api\Resources\CollectionResponse
+     */
     public function index(Model $model)
     {
         $query = $model->data($this->request->get('sync', null));
@@ -45,7 +54,7 @@ class ApiClientController extends BaseController
                 }
             }
         }
-        catch(\Exception $exception){
+        catch(Exception $exception){
             $data = [];
             $message = $exception->getMessage();
             if($exception instanceof ValidationException){

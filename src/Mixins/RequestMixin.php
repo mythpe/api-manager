@@ -4,12 +4,19 @@ namespace Myth\Api\Mixins;
 
 use Myth\Api\Facades\Api;
 
+/**
+ * Class RequestMixin
+ * @package Myth\Api\Mixins
+ */
 class RequestMixin
 {
 
     /** @var string */
     protected $authManager = null;
 
+    /**
+     * @return \Closure
+     */
     public function authManager()
     {
         return function () {
@@ -20,6 +27,9 @@ class RequestMixin
         };
     }
 
+    /**
+     * @return \Closure
+     */
     public function setAuthManager()
     {
         return function ($name) {

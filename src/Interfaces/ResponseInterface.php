@@ -2,6 +2,8 @@
 
 namespace Myth\Api\Interfaces;
 
+use Exception;
+use GuzzleHttp\Psr7\Response;
 use Myth\Api\Facades\Api;
 
 /**
@@ -31,7 +33,7 @@ class ResponseInterface
     /**
      * @return \GuzzleHttp\Psr7\Response
      */
-    public function request(): \GuzzleHttp\Psr7\Response
+    public function request(): Response
     {
         return $this->request;
     }
@@ -54,7 +56,7 @@ class ResponseInterface
         try{
             return (int) $response['data'][Api::clientResponseKey()][Api::clientPrimaryKey()];
         }
-        catch(\Exception $exception){
+        catch(Exception $exception){
         }
         return 0;
     }

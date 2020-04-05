@@ -6,6 +6,10 @@ use Myth\Api\Facades\Api;
 use Myth\Api\Helpers\HttpClient;
 use Myth\Api\Interfaces\ResponseInterface;
 
+/**
+ * Class ClientModelWrapper
+ * @package Myth\Api
+ */
 class ClientModelWrapper
 {
 

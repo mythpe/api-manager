@@ -10,6 +10,10 @@ use Myth\Api\ManagerWrapper;
 use Myth\Api\Models\ClientModel;
 use Myth\Api\Models\ManagerModel;
 
+/**
+ * Trait HasMythApi
+ * @package Myth\Api\Traits
+ */
 trait HasMythApi
 {
 

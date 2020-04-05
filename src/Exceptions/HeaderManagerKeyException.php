@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Myth\Api\Exceptions;
 
 use Exception;

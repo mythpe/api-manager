@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+
 return [
 
     /**
@@ -13,7 +15,6 @@ return [
      * @Illuminate\Support\Facades\Storage
      */
     'file_system_disk' => 'local',
-
 
     /*
     |--------------------------------------------------------------------------
@@ -43,7 +44,7 @@ return [
     "managers"         => [
         "manager-name" => [
             "models"  => [
-                \App\User::class => [
+                User::class => [
                     "uri"         => "user",
                     "transformer" => "UserTransformer",
                 ],

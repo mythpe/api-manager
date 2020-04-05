@@ -2,9 +2,14 @@
 
 namespace Myth\Api\Commands;
 
+use Exception;
 use Myth\Api\Exceptions\GetSecretException;
 use Myth\Api\Facades\Api;
 
+/**
+ * Class GetSecretCommand
+ * @package Myth\Api\Commands
+ */
 class GetSecretCommand extends BaseCommand
 {
 
@@ -38,7 +43,7 @@ class GetSecretCommand extends BaseCommand
             echo "Application secret: ";
             $this->info(Api::secret());
         }
-        catch(\Exception $exception){
+        catch(Exception $exception){
             throw new GetSecretException();
         }
     }

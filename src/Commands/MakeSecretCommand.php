@@ -13,6 +13,7 @@ class MakeSecretCommand extends BaseCommand
 {
 
     use ConfirmableTrait;
+
     /**
      * The name and signature of the console command.
      * @var string

@@ -3,8 +3,10 @@
 namespace Myth\Api\Facades;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Validation\Validator;
 use Myth\Api\ClientWrapper;
 use Myth\Api\Interfaces\ResponseInterface;
 use Myth\Api\ManagerWrapper;
@@ -28,11 +30,12 @@ use Myth\Api\ManagerWrapper;
  * @method static ClientWrapper manager(string $manager)
  * @method static string resolveRouteManagerConnection(Request $request)
  * @method static Builder managerData($manager, $model, bool $sync = null)
- * @method static \Illuminate\Validation\Validator validateManagerRequest($data)
+ * @method static Validator validateManagerRequest($data)
  * @method static string managerRequestKey manager array key from request
  * @method static string managerPrimaryKey manager primary key form request
  * @method static string clientResponseKey
  * @method static string clientPrimaryKey
+ * @method static JsonResponse JsonResponse($data, $message, $status, $headers, $options)
  * @package Myth\Api\Facades
  */
 class Api extends Facade

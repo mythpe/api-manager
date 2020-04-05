@@ -5,7 +5,10 @@ namespace Myth\Api\Commands;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 
-
+/**
+ * Class MakeClientTransformerCommand
+ * @package Myth\Api\Commands
+ */
 class MakeClientTransformerCommand extends BaseCommand
 {
 
@@ -20,6 +23,7 @@ class MakeClientTransformerCommand extends BaseCommand
      * @var string
      */
     protected $description = 'Create a new client api transformer of model file';
+
     /** @var Filesystem */
     protected $fs;
 

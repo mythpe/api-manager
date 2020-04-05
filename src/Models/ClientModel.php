@@ -13,8 +13,14 @@ use Illuminate\Database\Eloquent\Builder;
 class ClientModel extends Model
 {
 
+    /**
+     * @var string
+     */
     protected $table = "myth_api_client_models";
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'client_name',
         'client_id',
@@ -24,14 +30,23 @@ class ClientModel extends Model
         'sync_time',
     ];
 
+    /**
+     * @var array
+     */
     protected $attributes = [
         'sync' => false,
     ];
 
+    /**
+     * @var array
+     */
     protected $casts = [
         'sync' => 'boolean',
     ];
 
+    /**
+     * @var array
+     */
     protected $dates = ['sync_time'];
 
     /**

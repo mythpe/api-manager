@@ -26,6 +26,10 @@ use Myth\Api\Interfaces\ResponseInterface;
 use Myth\Api\Models\ClientModel;
 use Myth\Api\Models\ManagerModel;
 
+/**
+ * Class ApiWrapper
+ * @package Myth\Api
+ */
 class ApiWrapper
 {
 

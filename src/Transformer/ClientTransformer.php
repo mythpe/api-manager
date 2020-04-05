@@ -2,6 +2,10 @@
 
 namespace Myth\Api\Transformer;
 
+/**
+ * Class ClientTransformer
+ * @package Myth\Api\Transformer
+ */
 abstract class ClientTransformer extends MagicTransformer
 {
 

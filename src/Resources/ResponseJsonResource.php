@@ -4,6 +4,10 @@ namespace Myth\Api\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Class ResponseJsonResource
+ * @package Myth\Api\Resources
+ */
 class ResponseJsonResource extends JsonResource
 {
 
@@ -20,8 +24,6 @@ class ResponseJsonResource extends JsonResource
      */
     public function toArray($request)
     {
-        // $resource = $this->resource;
-        // $resource = $resource->appendRelations($resource->appendToMythApiArray());
-        return $this->resource;
+        return $this->resource->toArray();
     }
 }

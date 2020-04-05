@@ -23,6 +23,7 @@ class MakeManagerTransformerCommand extends BaseCommand
      * @var string
      */
     protected $description = 'Create a new manager api transformer of model file';
+
     /** @var Filesystem */
     protected $fs;
 

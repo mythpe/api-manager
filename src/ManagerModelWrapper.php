@@ -8,6 +8,10 @@ use Myth\Api\Facades\Api;
 use Myth\Api\Models\ManagerModel;
 use Myth\Api\Transformer\ManagerTransformer;
 
+/**
+ * Class ManagerModelWrapper
+ * @package Myth\Api
+ */
 class ManagerModelWrapper
 {
 
@@ -129,26 +133,42 @@ class ManagerModelWrapper
         return Api::managerData($this->manager->getName(), $this->modelClassName(), $sync);
     }
 
+    /**
+     * @return array
+     */
     public function fillable()
     {
         return $this->transformer::fillable($this->model(), request());
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return $this->transformer::toArray($this->model(), request());
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return bool|string
+     */
     public function validate(Request $request)
     {
         return $this->transformer::validate($request, $this->model());
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     */
     public function saving(Request $request)
     {
         return $this->transformer::saving($this->model(), $request);
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     */
     public function saved(Request $request)
     {
         return $this->transformer::saved($this->model(), $request);

@@ -2,18 +2,30 @@
 
 namespace Myth\Api;
 
+/**
+ * Class ClientWrapper
+ * @package Myth\Api
+ */
 class ClientWrapper
 {
 
     /** @var string $name manager name */
     protected $name;
+
     /** @var array $config manager config */
     protected $config;
+
     /** @var array[] $models list of locale models must will be sync with manager */
     protected $models = [];
+
     /** @var array[] $options manager options */
     protected $options = [];
 
+    /**
+     * ClientWrapper constructor.
+     * @param $config
+     * @param $name
+     */
     public function __construct($config, $name)
     {
         /** fill client config */

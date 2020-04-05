@@ -12,8 +12,10 @@ class CollectionResponse extends ResourceCollection
      * @var string
      */
     public $collects = "Myth\\Api\\Resources\\ResponseJsonResource";
+
     /** @var string */
     public $message = '';
+
     /** @var bool */
     public $success = true;
 

@@ -15,6 +15,10 @@ use Myth\Api\Facades\Api;
 use Myth\Api\Middlewares\AuthenticateMiddleware;
 use Myth\Api\Mixins\RequestMixin;
 
+/**
+ * Class ApiServiceProvider
+ * @package Myth\Api\Providers
+ */
 class ApiServiceProvider extends ServiceProvider
 {
 

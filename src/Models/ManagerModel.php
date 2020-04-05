@@ -14,8 +14,14 @@ use Illuminate\Database\Eloquent\Builder;
 class ManagerModel extends Model
 {
 
+    /**
+     * @var string
+     */
     protected $table = "myth_api_manager_models";
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'manager_name',
         'manager_id',
@@ -25,14 +31,23 @@ class ManagerModel extends Model
         'sync_time',
     ];
 
+    /**
+     * @var array
+     */
     protected $attributes = [
         'sync' => false,
     ];
 
+    /**
+     * @var array
+     */
     protected $casts = [
         'sync' => 'boolean',
     ];
 
+    /**
+     * @var array
+     */
     protected $dates = ['sync_time'];
 
     /**

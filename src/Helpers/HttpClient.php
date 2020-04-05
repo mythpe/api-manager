@@ -5,6 +5,10 @@ namespace Myth\Api\Helpers;
 use GuzzleHttp\Client;
 use Myth\Api\Facades\Api;
 
+/**
+ * Class HttpClient
+ * @package Myth\Api\Helpers
+ */
 class HttpClient
 {
 
