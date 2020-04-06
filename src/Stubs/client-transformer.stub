@@ -7,9 +7,9 @@
  */
 namespace App;
 
-use Myth\Api\Transformer\BaseApiTransformer;
+use Myth\Api\Transformer\ClientTransformer;
 
-class {CLASS_NAME} extends BaseApiTransformer
+class {CLASS_NAME} extends ClientTransformer
 {
 
     /**
