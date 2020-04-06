@@ -80,7 +80,8 @@ trait HasMythApi
      */
     public function sendToClient($client): ResponseInterface
     {
-        $response = Api::sendToClient($client, $this);
+        $client = Api::client($client);
+        $response = Api::sendToClient($client, $this, $client->model($this)->transformer()->body());
         return $response;
     }
 
